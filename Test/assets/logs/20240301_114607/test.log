@@ -1,0 +1,21 @@
+Mar 01, 2024 11:46:12 AM dev.selenium.test.Modules.Login Test_Login
+INFO: [Start] of Login Test Automation
+Mar 01, 2024 11:46:17 AM dev.selenium.test.Modules.Login Test_Login
+INFO: [End] of Login Test Automation
+Mar 01, 2024 11:46:17 AM dev.selenium.test.Modules.UserDetails Test_UserDetails
+INFO: [START] of User Details
+Mar 01, 2024 11:46:18 AM dev.selenium.test.Modules.UserDetails OpenModule
+INFO: Opening User Details Module
+Mar 01, 2024 11:46:18 AM dev.selenium.test.Modules.UserDetails OpenModule
+INFO: [PASS] Openend User Details Module
+Mar 01, 2024 11:46:18 AM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: Adding New User
+Mar 01, 2024 11:46:34 AM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Able to Add user with complete fields
+Mar 01, 2024 11:46:34 AM dev.selenium.test.Modules.UserDetails ViewUser
+INFO: Checking if new added user is present on 'Users List'
+Mar 01, 2024 11:48:23 AM dev.selenium.test.Modules.UserDetails Test_UserDetails
+INFO: [END] of User Details
+Mar 01, 2024 11:48:23 AM dev.selenium.test.Main main
+INFO: One or more assertions failed: The following asserts failed:
+	expected [1] but found [6]

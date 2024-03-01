@@ -1,0 +1,20 @@
+Mar 01, 2024 5:41:56 PM dev.selenium.test.Modules.Login Test_Login
+INFO: [Start] of Login Test Automation
+Mar 01, 2024 5:42:02 PM dev.selenium.test.Modules.Login Test_Login
+INFO: [End] of Login Test Automation
+Mar 01, 2024 5:42:02 PM dev.selenium.test.Modules.UserDetails Test_UserDetails
+INFO: [START] of User Details
+Mar 01, 2024 5:42:02 PM dev.selenium.test.Modules.UserDetails OpenModule
+INFO: Opening User Details Module
+Mar 01, 2024 5:42:03 PM dev.selenium.test.Modules.UserDetails OpenModule
+INFO: [PASS] Openend User Details Module
+Mar 01, 2024 5:42:03 PM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: Adding New User
+Mar 01, 2024 5:42:06 PM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Unable to Add user with incomplete required fields | No input
+Mar 01, 2024 5:42:24 PM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Able to Add user with incomplete optional fields
+Mar 01, 2024 5:42:24 PM dev.selenium.test.Modules.UserDetails ViewUser
+INFO: Checking if new added user is present on 'Users List'
+Mar 01, 2024 5:42:30 PM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Unable to Add user with mismatched passwords

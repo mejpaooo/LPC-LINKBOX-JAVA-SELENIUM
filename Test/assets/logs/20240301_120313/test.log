@@ -1,0 +1,20 @@
+Mar 01, 2024 12:03:18 PM dev.selenium.test.Modules.Login Test_Login
+INFO: [Start] of Login Test Automation
+Mar 01, 2024 12:03:24 PM dev.selenium.test.Modules.Login Test_Login
+INFO: [End] of Login Test Automation
+Mar 01, 2024 12:03:24 PM dev.selenium.test.Modules.UserDetails Test_UserDetails
+INFO: [START] of User Details
+Mar 01, 2024 12:03:24 PM dev.selenium.test.Modules.UserDetails OpenModule
+INFO: Opening User Details Module
+Mar 01, 2024 12:03:25 PM dev.selenium.test.Modules.UserDetails OpenModule
+INFO: [PASS] Openend User Details Module
+Mar 01, 2024 12:03:25 PM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: Adding New User
+Mar 01, 2024 12:03:38 PM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Able to Add user with complete fields
+Mar 01, 2024 12:03:38 PM dev.selenium.test.Modules.UserDetails ViewUser
+INFO: Checking if new added user is present on 'Users List'
+Mar 01, 2024 1:02:14 PM dev.selenium.test.Modules.UserDetails Test_UserDetails
+INFO: [END] of User Details
+Mar 01, 2024 1:02:14 PM dev.selenium.test.Main main
+INFO: All assertions passed successfully.

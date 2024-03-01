@@ -1,0 +1,31 @@
+Mar 01, 2024 5:28:03 PM dev.selenium.test.Modules.Login Test_Login
+INFO: [Start] of Login Test Automation
+Mar 01, 2024 5:28:09 PM dev.selenium.test.Modules.Login Test_Login
+INFO: [End] of Login Test Automation
+Mar 01, 2024 5:28:09 PM dev.selenium.test.Modules.UserDetails Test_UserDetails
+INFO: [START] of User Details
+Mar 01, 2024 5:28:09 PM dev.selenium.test.Modules.UserDetails OpenModule
+INFO: Opening User Details Module
+Mar 01, 2024 5:28:10 PM dev.selenium.test.Modules.UserDetails OpenModule
+INFO: [PASS] Openend User Details Module
+Mar 01, 2024 5:28:10 PM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: Adding New User
+Mar 01, 2024 5:28:12 PM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Unable to Add user with incomplete required fields | No input
+Mar 01, 2024 5:28:28 PM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Able to Add user with incomplete optional fields
+Mar 01, 2024 5:28:28 PM dev.selenium.test.Modules.UserDetails ViewUser
+INFO: Checking if new added user is present on 'Users List'
+Mar 01, 2024 5:28:34 PM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Unable to Add user with mismatched passwords
+Mar 01, 2024 5:28:38 PM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Unable to Add user with mismatched passwords
+Mar 01, 2024 5:28:51 PM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Able to Add user with complete fields
+Mar 01, 2024 5:28:51 PM dev.selenium.test.Modules.UserDetails ViewUser
+INFO: Checking if new added user is present on 'Users List'
+Mar 01, 2024 5:28:53 PM dev.selenium.test.Modules.UserDetails Test_UserDetails
+INFO: [END] of User Details
+Mar 01, 2024 5:28:53 PM dev.selenium.test.Main main
+INFO: One or more assertions failed: The following asserts failed:
+	No UserName Already Exists Notification expected [1] but found [0]

@@ -1,0 +1,94 @@
+{
+  "Login": {
+    "username": "userName",
+    "password": "password",
+    "btn_signIn" : "submit",
+    "cred_username" : "admin",
+    "cred_password" : "1234"
+  },
+  "UserDetails": {
+    "userManagementMenu" : "/html/body/div[2]/aside/section/ul/li[3]/a",
+    "userDetailsMenu": "/html/body/div[2]/aside/section/ul/li[3]/ul/li[1]/a",
+    "names": [
+      "Alice", "Bob", "Charlie", "David", "Eve", "Frank", "Grace", "Heidi",
+      "Ivan", "Jane", "Kate", "Liam", "Mia", "Noah", "Olivia", "Peter",
+      "Quinn", "Rachel", "Sam", "Tom", "Uma", "Vera", "Wendy", "Xander",
+      "Yara", "Zane", "Amelia", "Benjamin", "Chloe", "Daniel", "Emma",
+      "Fiona", "George", "Hannah", "Isaac", "Jack", "Katie", "Leo", "Molly",
+      "Nathan", "Oscar", "Penny", "Quentin", "Rose", "Sophia", "Tyler",
+      "Una", "Victoria", "Will", "Xenia", "Yvonne", "Zack",
+      "Abigail", "Brian", "Catherine", "Dominic", "Elena", "Freddie", "Gina",
+      "Harry", "Isla", "Jake", "Kylie", "Luke", "Megan", "Natalie", "Owen",
+      "Paige", "Quincy", "Riley", "Samantha", "Toby", "Ursula", "Vanessa", "Wyatt",
+      "Xavier", "Yasmin", "Zara", "Aaron", "Bella", "Caleb", "Daisy", "Ethan",
+      "Felicity", "Gabriel", "Holly", "Isabel", "Jasper", "Keira", "Luna", "Maxwell",
+      "Nora", "Oliver", "Poppy", "Quinn", "Rebecca", "Seth", "Tabitha", "Ulysses",
+      "Valerie", "William", "Xander", "Yvette", "Zane",
+      "Ava", "Brody", "Cora", "Dylan", "Ella", "Finn", "Georgia", "Henry",
+      "Ivy", "Jacob", "Layla", "Mason", "Nora", "Olive", "Piper",
+      "Ryder", "Scarlett", "Theo", "Violet", "Wyatt", "Zara",
+      "Archer", "Beatrix", "Callum", "Daphne", "Ezra", "Fiona", "Gideon", "Harper",
+      "Imogen", "Jude", "Kira", "Liam", "Matilda", "Nash", "Ophelia",
+      "Phoebe", "Quentin", "Rory", "Seraphina", "Thea", "Uriah", "Vivienne",
+      "Wilder", "Xanthe", "Yael", "Zephyr"
+    ],
+    "btn_AddUserDetails": "/html/body/div[2]/div/section/div/div[1]/div/div[2]/div/a",
+    "inp_AddUserDetails_UserName": "/html/body/div[2]/div/form/section/div/div/div/div[2]/div/div[1]/div/input",
+    "inp_AddUserDetails_FirstName": "/html/body/div[2]/div/form/section/div/div/div/div[2]/div/div[2]/div/input",
+    "inp_AddUserDetails_LastName": "/html/body/div[2]/div/form/section/div/div/div/div[2]/div/div[3]/div/input",
+    "inp_AddUserDetails_MiddleName": "/html/body/div[2]/div/form/section/div/div/div/div[2]/div/div[4]/div/input",
+    "inp_AddUserDetails_Password": "/html/body/div[2]/div/form/section/div/div/div/div[2]/div/div[6]/div/input",
+    "inp_AddUserDetails_ConfirmPassword": "/html/body/div[2]/div/form/section/div/div/div/div[2]/div/div[7]/div/input",
+    "btn_AddUserDetails_AddNewUser": "/html/body/div[2]/div/form/section/div/div/div/div[2]/div/div[8]/div/input",
+    "btn_AddUserDetails_Cancel": "/html/body/div[2]/div/form/section/div/div/div/div[2]/div/div[8]/div/button",
+    "btn_AddUserDetails_ConfirmAddNewUser": "/html/body/div[3]/div/div[3]/button[1]",
+    "lbl_AddUserDetails_RequiredNotif_UserName": "/html/body/div[2]/div/form/section/div/div/div/div[2]/div/div[2]/span",
+    "lbl_AddUserDetails_RequiredNotif_FirstName": "/html/body/div[2]/div/form/section/div/div/div/div[2]/div/div[3]/span",
+    "lbl_AddUserDetails_RequiredNotif_LastName": "/html/body/div[2]/div/form/section/div/div/div/div[2]/div/div[4]/span",
+    "lbl_AddUserDetails_RequiredNotif_Password": "/html/body/div[2]/div/form/section/div/div/div/div[2]/div/div[7]/span",
+    "lbl_AddUserDetails_RequiredNotif_ReTypePassword": "/html/body/div[2]/div/form/section/div/div/div/div[2]/div/div[8]/span",
+    "inp_SearchUser_Search": "/html/body/div[2]/div/section/div/div[1]/div/div[2]/div/div/div[1]/div[2]/div/label/input",
+    "lbl_SearchUser_UsersTable_UserName": "/html/body/div[2]/div/section/div/div[1]/div/div[2]/div/div/div[2]/div/table/tbody/tr/td[2]",
+    "lbl_SearchUser_UsersTable_Name": "/html/body/div[2]/div/section/div/div[1]/div/div[2]/div/div/div[2]/div/table/tbody/tr/td[3]",
+    "lbl_SearchUser_UsersTable_ActiveStatus": "/html/body/div[2]/div/section/div/div[1]/div/div[2]/div/div/div[2]/div/table/tbody/tr/td[4]/span",
+    "btn_SearchUser_UsersTable_EditUser": "/html/body/div[2]/div/section/div/div[1]/div/div[2]/div/div/div[2]/div/table/tbody/tr/td[1]/button",
+    "lbl_ViewedUser_UserName": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[1]/div/input",
+    "lbl_ViewedUser_FirstName": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[2]/div/input",
+    "lbl_ViewedUser_MiddleName": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[4]/div/input",
+    "lbl_ViewedUser_LastName": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[3]/div/input",
+    "btn_ViewedUser_ActiveStatus": "html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[5]/div",
+    "btn_ViewedUser_UpdatePassword": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[6]/center/a/label",
+    "btn_ViewedUser_CancelUpdatePassword": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[6]/center/a/label",
+    "inp_ViewedUser_CurrentPassword": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[7]/div/input",
+    "btn_ViewedUser_CurrentPassword_PassEye": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[7]/div/div/a",
+    "inp_ViewedUser_NewPassword": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[8]/div/input",
+    "btn_ViewedUser_NewPassword_PassEye": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[8]/div/div/a",
+    "inp_ViewedUser_ConfirmNewPassword": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[9]/div/input",
+    "btn_ViewedUser_ConfirmPassword_PassEye": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[9]/div/div/a",
+    "btn_ViewedUser_SaveChanges": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[2]/button[2]",
+    "btn_ViewedUser_CloseViewUser": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[2]/button[1]",
+    "lbl_AddUserDetails_Notif_PasswordsDoNotMatch": "/html/body/div[3]/div/div[1]/h2",
+    "btn_AddUserDetails_Close_Notif_PasswordsDoNotMatch": "/html/body/div[3]/div/div[3]/button[1]",
+    "lbl_AddUserDetails_Notif_UserNameAlreadyExists": "/html/body/div[3]/div/div[1]/h2",
+    "btn_AssUserDetails_Close_Notif_UserNameAlreadyExists": "/html/body/div[3]/div/div[3]/button[1]"
+
+  },
+  "SapSetup": {
+
+  },
+  "PathSetup": {
+
+  },
+  "EmailSetup": {
+
+  },
+  "FieldMapping": {
+
+  },
+  "ProcessSetup": {
+
+  },
+  "UploadScheduleSetup": {
+
+  }
+}
