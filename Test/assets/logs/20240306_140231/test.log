@@ -1,0 +1,8 @@
+Mar 06, 2024 2:02:37 PM dev.selenium.test.Modules.Login Test_Login
+INFO: [Start] of Login Test Automation
+Mar 06, 2024 2:02:47 PM dev.selenium.test.Modules.Login Test_Login
+INFO: [End] of Login Test Automation
+Mar 06, 2024 2:02:47 PM dev.selenium.test.Modules.PathSetup OpenModule
+INFO: Opening User Details Module
+Mar 06, 2024 2:10:29 PM dev.selenium.test.Modules.PathSetup OpenModule
+INFO: [FAIL] Opened Path Setup Module

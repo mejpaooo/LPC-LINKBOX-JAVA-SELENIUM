@@ -25,11 +25,11 @@ public class UserDetails {
         screenshot(driver, savePath, "User Details.png");
 
         //Variables to be used in multiple classes
-        String userName = "", firstName = "", middleName = "", lastName = "", password = "1234";
+        String userName = "", firstName = "", middleName = "", lastName = "", password = userDetails.get("default_password");
 
         //Executing modules
         OpenModule(driver, wait, userDetails, logger, savePath, softAssert);    //Opening module
-        AddNewUser(driver, wait, userDetails, login, logger, savePath, softAssert, userName, firstName, middleName, lastName, password);    //Adding New User
+        userName = AddNewUser(driver, wait, userDetails, login, logger, savePath, softAssert, userName, firstName, middleName, lastName, password);    //Adding New User
         //ViewUser is called by "AddUser"
         EditUser(driver, wait, userDetails, login, logger, savePath, softAssert, userName, firstName, middleName, lastName, password);    //Adding New User
 
@@ -60,14 +60,14 @@ public class UserDetails {
     }
 
 
-    private static void AddNewUser(WebDriver driver, WebDriverWait wait,
+    private static String AddNewUser(WebDriver driver, WebDriverWait wait,
                                    Map<String, String> userDetails,
                                    Map<String, String> login, Logger logger, String savePath, SoftAssert softAssert,
                                    String userName, String firstName,
                                    String middleName, String lastName, String password) throws InterruptedException, FileNotFoundException {
 
 
-        logger.info("Adding New User");
+        logger.info("[START] Adding New User");
 
         Map<String, Object> userDetailsNames = JsonDatasetArray.parser("UserDetails");
         List<String> namesArray = (List<String>) userDetailsNames.get("names");
@@ -82,7 +82,7 @@ public class UserDetails {
 
         //Asserting page title
         softAssert.assertEquals(driver.getTitle(), "New User");
-        screenshot(driver, savePath, "User Details | Add New User.png");
+        screenshot(driver, savePath, "User Details_Add New User.png");
 
         for(int i=0; i<5; i++){
             //Adding New User Info Details
@@ -101,20 +101,26 @@ public class UserDetails {
                     wait.until(ExpectedConditions.elementToBeClickable(By.xpath(userDetails.get("btn_AddUserDetails_ConfirmAddNewUser"))));  //Wait until confirm modal opens
                     driver.findElement(By.xpath(userDetails.get("btn_AddUserDetails_ConfirmAddNewUser"))).click();
 
-                    //No Inputs
-                    x =driver.findElements(By.xpath(userDetails.get("lbl_AddUserDetails_RequiredNotif_UserName"))); //User Name
-                    softAssert.assertEquals(x.size(), 1, "Add New User: UserName required notif not displayed");
-                    x =driver.findElements(By.xpath(userDetails.get("lbl_AddUserDetails_RequiredNotif_FirstName"))); //First Name
-                    softAssert.assertEquals(x.size(), 1, "Add New User: First Name required notif not displayed");
-                    x =driver.findElements(By.xpath(userDetails.get("lbl_AddUserDetails_RequiredNotif_LastName"))); //Last Name
-                    softAssert.assertEquals(x.size(), 1);
-                    x =driver.findElements(By.xpath(userDetails.get("lbl_AddUserDetails_RequiredNotif_Password"))); //Password Name
-                    softAssert.assertEquals(x.size(), 1);
-                    x =driver.findElements(By.xpath(userDetails.get("lbl_AddUserDetails_RequiredNotif_ReTypePassword"))); //Retype Password
-                    softAssert.assertEquals(x.size(), 1);
+                    List <WebElement> t1, t2, t3, t4, t5;
 
-                    screenshot(driver, savePath, "User Details | Add user with No Inputs.png");
-                    logger.info("[PASS] Unable to Add user with incomplete required fields | No input");
+                    //No Inputs
+                    t1 =driver.findElements(By.xpath(userDetails.get("lbl_AddUserDetails_RequiredNotif_UserName"))); //User Name
+                    softAssert.assertEquals(t1.size(), 1, "Add New User: UserName required notif not displayed");
+                    t2 =driver.findElements(By.xpath(userDetails.get("lbl_AddUserDetails_RequiredNotif_FirstName"))); //First Name
+                    softAssert.assertEquals(t2.size(), 1, "Add New User: First Name required notif not displayed");
+                    t3 =driver.findElements(By.xpath(userDetails.get("lbl_AddUserDetails_RequiredNotif_LastName"))); //Last Name
+                    softAssert.assertEquals(t3.size(), 1);
+                    t4 =driver.findElements(By.xpath(userDetails.get("lbl_AddUserDetails_RequiredNotif_Password"))); //Password Name
+                    softAssert.assertEquals(t4.size(), 1);
+                    t5 =driver.findElements(By.xpath(userDetails.get("lbl_AddUserDetails_RequiredNotif_ReTypePassword"))); //Retype Password
+                    softAssert.assertEquals(t5.size(), 1);
+
+                    screenshot(driver, savePath, "User Details_Add user with No Inputs.png");
+                    if(t1.size() == 1 && t2.size() == 1 && t3.size() == 1 && t4.size() == 1 && t5.size() == 1){
+                        logger.info("[PASS] Unable to Add user with incomplete required fields_No input");
+                    } else {
+                        logger.info("[FAIL] Unable to Add user with incomplete required fields_No input");
+                    }
                     break;
 
 
@@ -134,9 +140,9 @@ public class UserDetails {
                     driver.findElement(By.xpath(userDetails.get("inp_AddUserDetails_LastName"))).sendKeys(lastName);
                     driver.findElement(By.xpath(userDetails.get("inp_AddUserDetails_Password"))).sendKeys(password);
                     driver.findElement(By.xpath(userDetails.get("inp_AddUserDetails_ConfirmPassword"))).sendKeys(password);
+                    screenshot(driver, savePath, "User Details_Add User with incomplete optional fields.png");
                     driver.findElement(By.xpath(userDetails.get("btn_AddUserDetails_AddNewUser"))).click(); //Submitting user
                     wait.until(ExpectedConditions.elementToBeClickable(By.xpath(userDetails.get("btn_AddUserDetails_ConfirmAddNewUser")))); //Waiting for confirm add user button to be clickable
-                    screenshot(driver, savePath, "User Details | Add User with incomplete optional fields.png");
                     driver.findElement(By.xpath(userDetails.get("btn_AddUserDetails_ConfirmAddNewUser"))).click(); //Submitting user
 
 
@@ -153,10 +159,15 @@ public class UserDetails {
                     NewDriver.findElement(By.id(login.get("btn_signIn"))).click();
                     softAssert.assertEquals(NewDriver.getTitle(), "Home Page", "Page title is not as expected: ");
                     Thread.sleep(1000);
-                    screenshot(driver, savePath, "Logged in with correct credentials_Dashboard.png");
+                    screenshot(driver, savePath, "Logged in with correct credentials_Dashboard (User with no middle name).png");
+
+                    if(NewDriver.getTitle().equals("Home Page")){
+                        logger.info("[PASS] Able to Add user with incomplete optional fields");
+                    } else{
+                        logger.info("[FAIL] Able to Add user with incomplete optional fields");
+                    }
                     NewDriver.quit();
 
-                    logger.info("[PASS] Able to Add user with incomplete optional fields");
 
                     //Checking if Users Table list contains added user.
                     ViewUser(driver, wait, userDetails, login, logger, savePath, softAssert, userName, firstName, middleName, lastName, password);    //Adding New User
@@ -177,6 +188,7 @@ public class UserDetails {
                     driver.findElement(By.xpath(userDetails.get("inp_AddUserDetails_MiddleName"))).sendKeys(middleName);
                     driver.findElement(By.xpath(userDetails.get("inp_AddUserDetails_LastName"))).sendKeys(lastName);
                     driver.findElement(By.xpath(userDetails.get("inp_AddUserDetails_Password"))).sendKeys(password);
+
                     //Deliberately Mismatching the Passwords
                     driver.findElement(By.xpath(userDetails.get("inp_AddUserDetails_ConfirmPassword"))).sendKeys(password+userName);
                     driver.findElement(By.xpath(userDetails.get("btn_AddUserDetails_AddNewUser"))).click(); //Submitting user
@@ -186,7 +198,13 @@ public class UserDetails {
                     x = driver.findElements(By.xpath(userDetails.get("lbl_AddUserDetails_Notif_PasswordsDoNotMatch")));
                     //Asserting that a notification regarding a mismatched password is displayed.
                     softAssert.assertEquals(x.size(), 1, "No Passwords Do Not Match Notification");
-                    screenshot(driver, savePath, "User Details | Add user with mismatched password.png");
+                    screenshot(driver, savePath, "User Details_Add user with mismatched password.png");
+                    if(x.size() == 1){
+                        logger.info("[PASS] Unable to Add user with mismatched passwords");
+                    } else {
+                        logger.info("[FAIL] Unable to Add user with mismatched passwords");
+                    }
+
                     driver.findElement(By.xpath(userDetails.get("btn_AddUserDetails_Close_Notif_PasswordsDoNotMatch"))).click(); // Closing Passwords Do Not Match Notif
 
                     //Closing Add User Modal
@@ -196,7 +214,6 @@ public class UserDetails {
                     //Asserting that the modal is closed after clicking cancel
                     softAssert.assertEquals(x.size(), 0, "Add User Modal is still Opened after clicking 'Cancel'");
 
-                    logger.info("[PASS] Unable to Add user with mismatched passwords");
                     break;
 
 
@@ -222,11 +239,14 @@ public class UserDetails {
                     x = driver.findElements(By.xpath(userDetails.get("lbl_AddUserDetails_Notif_UserNameAlreadyExists")));
                     //Asserting that a notification regarding a mismatched password is displayed.
                     softAssert.assertEquals(x.size(), 1, "No UserName Already Exists Notification");
-                    screenshot(driver, savePath, "User Details | Add User with existing username.png");
+                    screenshot(driver, savePath, "User Details_Add User with existing username.png");
 
-                    // If true Close UserName Already Exists Notif
+                    // If username already exists error notif exists, Close UserName Already Exists Notif
                     if (x.size() == 1){
+                        logger.info("[PASS] Unable to Add user with mismatched passwords");
                         driver.findElement(By.xpath(userDetails.get("btn_AssUserDetails_Close_Notif_UserNameAlreadyExists"))).click();
+                    } else {
+                        logger.info("[FAIL] Unable to Add user with mismatched passwords");
                     }
 
                     //Closing Add User Modal
@@ -244,14 +264,12 @@ public class UserDetails {
                     //Asserting that the modal is closed after clicking cancel
                     softAssert.assertEquals(x.size(), 0, "Add User Modal is still Opened after clicking 'Cancel'");
 
-                    logger.info("[PASS] Unable to Add user with mismatched passwords");
                     break;
 
 
 
                 //Add user with complete user details
                 case (4):
-//                    driver.navigate().refresh();
 
                     wait.until(ExpectedConditions.titleIs("User Details"));
                     driver.findElement(By.xpath(userDetails.get("btn_AddUserDetails"))).click();
@@ -265,9 +283,47 @@ public class UserDetails {
                     driver.findElement(By.xpath(userDetails.get("inp_AddUserDetails_LastName"))).sendKeys(lastName);
                     driver.findElement(By.xpath(userDetails.get("inp_AddUserDetails_Password"))).sendKeys(password);
                     driver.findElement(By.xpath(userDetails.get("inp_AddUserDetails_ConfirmPassword"))).sendKeys(password);
+
+
+                    //Checking if password eye is functional
+                    String type1 = driver.findElement(By.xpath(userDetails.get("inp_AddUserDetails_Password"))).getAttribute("type");
+                    String type2 = driver.findElement(By.xpath(userDetails.get("inp_AddUserDetails_ConfirmPassword"))).getAttribute("type");
+
+                    for(int j=0; j<2; j++){
+                        //when password field is viewable as text
+                        if(!type1.equals("password") && !type2.equals("password")){
+                            softAssert.assertNotEquals("password", type1);
+                            softAssert.assertNotEquals("password", type2);
+                            logger.info("[PASS] Add User Details_Able to DECRYPT password");
+                        }else{  //when password field is hidden, assert that string password is not equal ******
+                            softAssert.assertEquals("password", type1);
+                            softAssert.assertEquals("password", type2);
+                            logger.info("[PASS] Add User Details_Able to ENCRYPT password");
+                        }
+
+                        //Click password eyes
+                        driver.findElement(By.id(userDetails.get("btn_AddUserDetails_ShowPassword"))).click();
+                        driver.findElement(By.id(userDetails.get("btn_AddUserDetails_ShowRetypedPassword"))).click();
+                    }
+
+                    //Show password
+                    driver.findElement(By.id(userDetails.get("btn_AddUserDetails_ShowPassword"))).click();
+                    driver.findElement(By.id(userDetails.get("btn_AddUserDetails_ShowRetypedPassword"))).click();
+                    screenshot(driver, savePath, "Saving new user with complete details.png");
+
+                    screenshot(driver, savePath, "User Details_Add User with complete details.png");
                     driver.findElement(By.xpath(userDetails.get("btn_AddUserDetails_AddNewUser"))).click(); //Submitting user
                     wait.until(ExpectedConditions.elementToBeClickable(By.xpath(userDetails.get("btn_AddUserDetails_ConfirmAddNewUser")))); //Waiting for confirm add user button to be clickable
                     driver.findElement(By.xpath(userDetails.get("btn_AddUserDetails_ConfirmAddNewUser"))).click(); //Submitting user
+                    logger.info("[PASS] Able to Add user with complete fields");
+
+
+                    //Checking if username already exists
+                    x = driver.findElements(By.xpath(userDetails.get("lbl_AddUserDetails_Notif_UserNameAlreadyExists")));
+                    if(x.size() == 1){
+                        i--; //Repearing the process with differente user credentials
+                        break;
+                    }
 
 
                     //Make new tab to login
@@ -283,11 +339,15 @@ public class UserDetails {
                     NewDriver.findElement(By.id(login.get("btn_signIn"))).click();
                     softAssert.assertEquals(NewDriver.getTitle(), "Home Page", "Page title is not as expected: ");
                     Thread.sleep(1000);
-                    screenshot(driver, savePath, "Logged in with correct credentials_Dashboard.png");
+                    screenshot(driver, savePath, "Logged in with correct credentials_Dashboard (User with complete Details).png");
                     NewDriver.quit();
 
-                    screenshot(driver, savePath, "User Details | Add User with complete details.png");
-                    logger.info("[PASS] Able to Add user with complete fields");
+
+                    //Closing Modal
+//                    x = driver.findElements(By.xpath(userDetails.get("btn_ViewedUser_CloseViewUser")));
+//                    if(x.size() == 1){
+//                        driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_CloseViewUser"))).click();
+//                    }
 
                     //Calling function to assert added user details
                     ViewUser(driver, wait, userDetails, login, logger, savePath, softAssert, userName, firstName, middleName, lastName, password);    //Adding New User
@@ -295,11 +355,12 @@ public class UserDetails {
 
 
             }
+
         }
 
-
-
-    } // Add new user
+        logger.info("[END] Adding New User");
+        return userName;
+    } // End of Add new user
 
 
     private static void ViewUser(WebDriver driver, WebDriverWait wait,
@@ -309,7 +370,7 @@ public class UserDetails {
                                    String middleName, String lastName, String password) throws InterruptedException, FileNotFoundException {
 
 
-        logger.info("Checking if new added user is present on 'Users List'");
+        logger.info("[START] Checking if new added user is present on 'Users List'");
 
         List < WebElement> x;
 
@@ -317,8 +378,9 @@ public class UserDetails {
         driver.findElement(By.xpath(userDetails.get("inp_SearchUser_Search"))).sendKeys(userName);
         x = driver.findElements(By.xpath(userDetails.get("lbl_SearchUser_UsersTable_UserName")+"[contains(text(),"+userName+")]")); //Asserts if username value is equivalent to added username
         softAssert.assertEquals(x.size(), 1, "Username: "+userName+" does not exist. "); //Asserts that added username exists on table
-        softAssert.assertEquals(driver.findElement(By.xpath(userDetails.get("lbl_SearchUser_UsersTable_UserName"))).getText(), userName, "Search Users: Values Does Not Match. "); //Asserts that found username is equal to added username
+        softAssert.assertEquals(driver.findElement(By.xpath(userDetails.get("lbl_SearchUser_UsersTable_UserName")+"[contains(text(),"+userName+")]")).getText(), userName, "Search Users: Values Does Not Match. "); //Asserts that found username is equal to added username
         softAssert.assertEquals(driver.findElement(By.xpath(userDetails.get("lbl_SearchUser_UsersTable_ActiveStatus"))).getText(), "Active", "Active Status Not 'Active'"); //Asserts that found user status is active
+        screenshot(driver, savePath, "Searching User on User Details Table.png");
 
         //For instance that the user has no middle name
         if (middleName.isEmpty()){
@@ -332,11 +394,15 @@ public class UserDetails {
         driver.findElement(By.xpath(userDetails.get("btn_SearchUser_UsersTable_EditUser"))).click();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(userDetails.get("btn_ViewedUser_SaveChanges"))));
         Thread.sleep(1000);
+        screenshot(driver, savePath, "Selected User Details.png");
         softAssert.assertEquals(driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_UserName"))).getAttribute("value"), userName, "Added Username does not match. "); //Verifying user Name
         softAssert.assertEquals(driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_FirstName"))).getAttribute("value"), firstName, "Added First Name does not match. "); //Verifying first Name
         softAssert.assertEquals(driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_MiddleName"))).getAttribute("value"), middleName, "Added Middle Name does not match. "); //Verifying middle Name
         softAssert.assertEquals(driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_LastName"))).getAttribute("value"), lastName, "Added Last Name does not match. "); //Verifying last Name
-        softAssert.assertEquals(driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_ActiveStatus"))).getAttribute("aria-checked"), "true", "Active Status not Checked.");
+        softAssert.assertEquals(driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_ActiveStatus"))).getAttribute("aria-checked"), "true", "Active Status not Checked."); //Verifying that active status is checked
+
+
+        logger.info("[END] Checking if new added user is present on 'Users List'");
 
     }//End of ViewUser
 
@@ -349,11 +415,281 @@ public class UserDetails {
                                  String middleName, String lastName, String password) throws InterruptedException, FileNotFoundException {
 
 
+        logger.info("[START] Editing User");
+        screenshot(driver, savePath, "Edit User Details_Before User Edit.png");
+
+        Map<String, Object> userDetailsNames = JsonDatasetArray.parser("UserDetails");
+        List<String> namesArray = (List<String>) userDetailsNames.get("names");
+        Random random = new Random();
+        List <WebElement> x;
+        String y;
+
+
+        String NewfirstName = namesArray.get(random.nextInt(151));
+        String NewmiddleName = namesArray.get(random.nextInt(151));
+        String NewlastName = namesArray.get(random.nextInt(151));
+        String Newpassword = userDetails.get("new_password");
+
+        //Asserting that username is not editable
+        y = driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_UserName"))).getAttribute("disabled");
+        softAssert.assertEquals(y,"true", "Error: Edit User Details | User Name is Editable");
+
+        for(int i=0; i<4; i++){
+            switch (i){
+
+                //Editing User by deleting first name and last name
+                case (0):
+                    //Opening existing user
+//                    driver.findElement(By.xpath(userDetails.get("inp_SearchUser_Search"))).sendKeys(userName);
+//                    driver.findElement(By.xpath(userDetails.get("btn_SearchUser_UsersTable_EditUser"))).click();
+
+                    //Clearing First Name and Last Name fields
+                    driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_FirstName"))).clear();
+                    driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_LastName"))).clear();
+
+                    //Opening "Update Password" Fields
+                    driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_UpdatePassword"))).click();
+                    wait.until(ExpectedConditions.elementToBeClickable(By.xpath(userDetails.get("btn_ViewedUser_CurrentPassword_PassEye"))));
+
+                    //Submitting Changes, to check if required notifications are displayed
+                    driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_SaveChanges"))).click();
+                    Thread.sleep(2000);
+
+                    List <WebElement> t1, t2, t3, t4, t5;
+
+                    //Asserting that first name required notification is displayed
+                    t1 = driver.findElements(By.xpath(userDetails.get("lbl_EditUserDetails_FirstName_RequiredNotif")));
+                    softAssert.assertEquals(t1.size(), 1, "Edit User Details | No First Name Required Notification");
+
+                    //Asserting that last name required notification is displayed
+                    t2 = driver.findElements(By.xpath(userDetails.get("lbl_EditUserDetails_LastName_RequiredNotif")));
+                    softAssert.assertEquals(t2.size(), 1, "Edit User Details | No Last Name Required Notification");
+
+
+                    //Asserting that current password required notification is displayed
+                    t3 = driver.findElements(By.xpath(userDetails.get("lbl_EditUserDetails_CurrentPassword_RequiredNotif")));
+                    softAssert.assertEquals(t3.size(), 1, "Edit User Details | No Current Password Required Notification");
+
+                    //Asserting that new password required notification is displayed
+                    t4 = driver.findElements(By.xpath(userDetails.get("lbl_EditUserDetails_NewPassword_RequiredNotif")));
+                    softAssert.assertEquals(t4.size(), 1, "Edit User Details | No New Password Required Notification");
+
+                    //Asserting that retype password required notification is displayed
+                    t5 = driver.findElements(By.xpath(userDetails.get("lbl_EditUserDetails_RetypePassword_RequiredNotif")));
+                    softAssert.assertEquals(t5.size(), 1, "Edit User Details | No Retype Password Required Notification");
+
+                    screenshot(driver, savePath, "Edit User Details without First and Last Name.png");
+                    if(t1.size() == 1 && t2.size() == 1 && t3.size() == 1 && t4.size() == 1 && t5.size() == 1){
+                        logger.info("[PASS] Unable to update user without Required Fields");
+                    }else{
+                        logger.info("[FAIL] Unable to update user without FRequired Fields");
+                    }
+
+                    //Closing modal
+                    driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_CloseViewUser"))).click();
+                    break;
+
+                //Updating password with mismatched passwords
+                case(1):
+                    //Opening existing user
+                    driver.findElement(By.xpath(userDetails.get("inp_SearchUser_Search"))).clear();
+                    driver.findElement(By.xpath(userDetails.get("inp_SearchUser_Search"))).sendKeys(userName);
+                    driver.findElement(By.xpath(userDetails.get("btn_SearchUser_UsersTable_EditUser"))).click();
+
+                    //Opening update password fields
+                    wait.until(ExpectedConditions.elementToBeClickable(By.xpath(userDetails.get("btn_ViewedUser_UpdatePassword"))));
+                    driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_UpdatePassword"))).click();
+                    wait.until(ExpectedConditions.elementToBeClickable(By.xpath(userDetails.get("btn_ViewedUser_CurrentPassword_PassEye"))));
+
+                    //Inputting password
+                    driver.findElement(By.xpath(userDetails.get("inp_ViewedUser_CurrentPassword"))).sendKeys(password);
+                    driver.findElement(By.xpath(userDetails.get("inp_ViewedUser_NewPassword"))).sendKeys(Newpassword);
+                    driver.findElement(By.xpath(userDetails.get("inp_ViewedUser_ConfirmNewPassword"))).sendKeys("wrong password"); // deliberately mismatching the password
+
+
+                    //Checking if password eye is functional
+                    String type1 = driver.findElement(By.xpath(userDetails.get("inp_ViewedUser_CurrentPassword"))).getAttribute("type");
+                    String type2 = driver.findElement(By.xpath(userDetails.get("inp_ViewedUser_NewPassword"))).getAttribute("type");
+                    String type3 = driver.findElement(By.xpath(userDetails.get("inp_ViewedUser_ConfirmNewPassword"))).getAttribute("type");
+
+
+                    for(int j=0; j<2; j++){
+                        //when password field is viewable as text
+                        if(!type1.equals("password") && !type2.equals("password") && !type3.equals("password")){
+                            softAssert.assertNotEquals("password", type1);
+                            softAssert.assertNotEquals("password", type2);
+                            softAssert.assertNotEquals("password", type3);
+                            logger.info("Add User Details_Able to DECRYPT password");
+                        }else{  //when password field is hidden, assert that string password is not equal ******
+                            softAssert.assertEquals("password", type1);
+                            softAssert.assertEquals("password", type2);
+                            softAssert.assertEquals("password", type3);
+                            logger.info("Add User Details_Able to ENCRYPT password");
+                        }
+
+                        //Show password
+                        driver.findElement(By.id(userDetails.get("btn_EditUserDetails_ShowCurrentPassword"))).click();
+                        driver.findElement(By.id(userDetails.get("btn_EditUserDetails_ShowNewPassword"))).click();
+                        driver.findElement(By.id(userDetails.get("btn_EditUserDetails_ShowNewRetypedPassword"))).click();
+
+                    }
+
+
+                    //Submitting Changes, to check if required notifications are displayed
+                    driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_SaveChanges"))).click();
+                    Thread.sleep(2000);
+                    driver.findElement(By.xpath(userDetails.get("btn_EditUserDetails_ConfirmSave"))).click();
+                    screenshot(driver, savePath, "Edit User Details_Mismatched New and Retype Password.png");
+
+                    x = driver.findElements(By.xpath(userDetails.get("btn_EditUserDetails_ConfirmSave")));
+                    if(x.size() == 1){
+                        driver.findElement(By.xpath(userDetails.get("btn_EditUserDetails_ConfirmSave"))).click(); //Closing the Error Notif Modal
+                        logger.info("[PASS] Unable to add new user with Mismatched 'New' and 'Retype' Password");
+                    } else{
+                        logger.info("[FAIL] Unable to add new user with Mismatched 'New' and 'Retype' Password");
+                    }
+
+
+                    //Checking if cancel works on the "confirm update" modal
+                    driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_SaveChanges"))).click();
+                    wait.until(ExpectedConditions.elementToBeClickable(By.xpath(userDetails.get("btn_EditUserDetails_Cancel_ConfirmSave"))));
+                    driver.findElement(By.xpath(userDetails.get("btn_EditUserDetails_Cancel_ConfirmSave"))).click();
+                    Thread.sleep(2000);
+                    x = driver.findElements(By.xpath(userDetails.get("btn_EditUserDetails_Cancel_ConfirmSave")));
+                    softAssert.assertEquals(x.size(), 0, "Edit User Details: Cancel button on confirming update of fields is not functional");
+
+
+                    //Making sure that the error notif is closed
+                    x = driver.findElements(By.xpath(userDetails.get("btn_EditUserDetails_UponSaving_ErrorNotification")));
+                    if(x.size() == 1){
+                        driver.findElement(By.xpath(userDetails.get("btn_EditUserDetails_UponSaving_ErrorNotification"))).click();
+                    }
+
+
+                    //Closing modal
+                    x = driver.findElements(By.xpath(userDetails.get("btn_ViewedUser_CloseViewUser")));
+                    if(x.size() == 1){
+                        driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_CloseViewUser"))).click();
+                    }
+
+                    break;
+
+                //Updating user with incorrect CURRENT password
+                case (2):
+                    //Opening existing user
+                    driver.findElement(By.xpath(userDetails.get("inp_SearchUser_Search"))).clear();
+                    driver.findElement(By.xpath(userDetails.get("inp_SearchUser_Search"))).sendKeys(userName);
+                    driver.findElement(By.xpath(userDetails.get("btn_SearchUser_UsersTable_EditUser"))).click();
+
+
+                    //Opening update password fields
+                    wait.until(ExpectedConditions.elementToBeClickable(By.xpath(userDetails.get("btn_ViewedUser_UpdatePassword"))));
+                    driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_UpdatePassword"))).click();
+                    wait.until(ExpectedConditions.elementToBeClickable(By.xpath(userDetails.get("btn_ViewedUser_CurrentPassword_PassEye"))));
+
+                    //Inputting password
+                    driver.findElement(By.xpath(userDetails.get("inp_ViewedUser_CurrentPassword"))).sendKeys("wrong password");// deliberately inputting the wrong password
+                    driver.findElement(By.xpath(userDetails.get("inp_ViewedUser_NewPassword"))).sendKeys(Newpassword);
+                    driver.findElement(By.xpath(userDetails.get("inp_ViewedUser_ConfirmNewPassword"))).sendKeys(Newpassword);
+
+                    //Submitting Changes, to check if error notification is displayed
+                    driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_SaveChanges"))).click();
+                    Thread.sleep(2000);
+                    driver.findElement(By.xpath(userDetails.get("btn_EditUserDetails_ConfirmSave"))).click(); // Confirming Save
+                    x = driver.findElements(By.xpath(userDetails.get("btn_EditUserDetails_UponSaving_ErrorNotification")));
+                    softAssert.assertEquals(x.size(), 1);
+
+                    screenshot(driver, savePath, "Edit User Details_Incorrect Current Password.png");
+                    if(x.size() == 1){
+                        logger.info("[PASS] Unable to update user with incorrect 'Current' Password");
+                        screenshot(driver, savePath, "Edit User Details_Incorrect Current Password.png");
+                        //Closing Error Notification
+                        driver.findElement(By.xpath(userDetails.get("btn_EditUserDetails_UponSaving_ErrorNotification"))).click();
+                    } else{
+                        logger.info("[FAIL] Unable to update user with incorrect 'Current' Password");
+                    }
 
 
 
+                    //Closing modal
+                    x =driver.findElements(By.xpath(userDetails.get("btn_ViewedUser_CloseViewUser")));
+                    if (x.size() == 1){
+                        driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_CloseViewUser"))).click();
+                    }
 
 
+                    break;
+
+
+
+                //Updating user with proper and correct data then check if still able to login
+                case (3):
+                    //Opening existing user
+                    driver.findElement(By.xpath(userDetails.get("inp_SearchUser_Search"))).clear();
+                    driver.findElement(By.xpath(userDetails.get("inp_SearchUser_Search"))).sendKeys(userName);
+                    driver.findElement(By.xpath(userDetails.get("btn_SearchUser_UsersTable_EditUser"))).click();
+
+                    //Opening update password fields
+                    wait.until(ExpectedConditions.elementToBeClickable(By.xpath(userDetails.get("btn_ViewedUser_UpdatePassword"))));
+                    driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_UpdatePassword"))).click();
+                    wait.until(ExpectedConditions.elementToBeClickable(By.xpath(userDetails.get("btn_ViewedUser_CurrentPassword_PassEye"))));
+
+                    //Clearing First Name and Last Name fields
+                    driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_FirstName"))).clear();
+                    driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_MiddleName"))).clear();
+                    driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_LastName"))).clear();
+
+                    driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_FirstName"))).sendKeys(NewfirstName);
+                    driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_MiddleName"))).sendKeys(NewmiddleName);
+                    driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_LastName"))).sendKeys(NewlastName);
+
+                    //Inputting password
+                    driver.findElement(By.xpath(userDetails.get("inp_ViewedUser_CurrentPassword"))).sendKeys(userDetails.get("default_password"));
+                    driver.findElement(By.xpath(userDetails.get("inp_ViewedUser_NewPassword"))).sendKeys(Newpassword);
+                    driver.findElement(By.xpath(userDetails.get("inp_ViewedUser_ConfirmNewPassword"))).sendKeys(Newpassword);
+
+                    //Submitting Changes, to check if error notification is displayed
+                    driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_SaveChanges"))).click();
+                    Thread.sleep(2000);
+                    driver.findElement(By.xpath(userDetails.get("btn_EditUserDetails_ConfirmSave"))).click(); // Confirming Save
+
+
+                    //Checking if user details are updated successfully
+                    Thread.sleep(3000);
+                    ViewUser(driver, wait, userDetails, login, logger, savePath, softAssert, userName, NewfirstName, NewmiddleName, NewlastName, Newpassword);
+
+
+                    //Make new tab to login
+                    WebDriver NewDriver;
+                    NewDriver = new EdgeDriver();
+                    NewDriver.get("http://192.168.2.32:8069");
+                    WebElement presenceOfLogInButton;
+
+
+                    //Waiting for login page to load
+                    presenceOfLogInButton = NewDriver.findElement(By.id(login.get("btn_signIn")));
+                    wait.until(ExpectedConditions.elementToBeClickable(presenceOfLogInButton));
+
+                    NewDriver.findElement(By.id(login.get("username"))).sendKeys(userName);
+                    NewDriver.findElement(By.id(login.get("password"))).sendKeys(Newpassword);
+                    NewDriver.findElement(By.id(login.get("btn_signIn"))).click();
+                    softAssert.assertEquals(NewDriver.getTitle(), "Home Page", "Unable to login with new credentials ");
+                    Thread.sleep(1000);
+
+                    if(NewDriver.getTitle().equals("Home Page")){
+                        logger.info("[PASS] Able to update user details and still able to login");
+                    } else{
+                        logger.info("[FAIL] Able to update user details and still able to login");
+                    }
+
+                    screenshot(NewDriver, savePath, "Logged in with correct credentials_Dashboard (Updated user details).png");
+                    NewDriver.quit();
+
+                    break;
+            }
+        }
+
+        logger.info("[END] Editing User");
 
 
     }//End of Edit User
@@ -363,4 +699,21 @@ public class UserDetails {
 
 
 
-    }//end of Main Class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}//end of Main Class

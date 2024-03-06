@@ -1,5 +1,3 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
 package dev.selenium.test;
 
 //imports for selenium automation
@@ -81,7 +79,7 @@ public class Main {
                 ,logger, login, savePath, softAssert);
 
 
-//        driver.quit();
+        driver.quit();
         try {
             softAssert.assertAll();
             logger.info("All assertions passed successfully.");

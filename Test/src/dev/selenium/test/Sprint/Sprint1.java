@@ -1,5 +1,6 @@
 package dev.selenium.test.Sprint;
 
+import dev.selenium.test.Modules.PathSetup;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -26,7 +27,10 @@ public class Sprint1 {
 
 
 
-        UserDetails.Test_UserDetails(driver, wait, userDetails, login, logger, savePath, softAssert);
+//        UserDetails.Test_UserDetails(driver, wait, userDetails, login, logger, savePath, softAssert);
+        PathSetup.Test_PathSetup(driver, wait, pathSetup, logger, savePath, softAssert);
+
+
     }
 
 

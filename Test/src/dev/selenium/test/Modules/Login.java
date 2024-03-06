@@ -15,7 +15,6 @@ import static dev.selenium.test.Customizations.screenshot.screenshot;
 
 public class Login {
     public static void Test_Login(WebDriver driver, WebDriverWait wait, Map<String, String> login, Logger logger, String savePath, SoftAssert softAssert) throws InterruptedException {
-        screenshot(driver, savePath,"Login.png");
         logger.info("[Start] of Login Test Automation");
         wait.until(ExpectedConditions.titleIs("Login"));
 
@@ -74,7 +73,7 @@ public class Login {
                     driver.findElement(By.id(login.get("btn_signIn"))).click();
                     softAssert.assertEquals(driver.getTitle(), "Home Page", "Page title is not as expected.");
                     Thread.sleep(1000);
-                    screenshot(driver, savePath, "Logged in with correct credentials_Dashboard.png");
+                    screenshot(driver, savePath, "Logged in with correct credentials_Dashboard (Existing user).png");
                     break;
             }
         }

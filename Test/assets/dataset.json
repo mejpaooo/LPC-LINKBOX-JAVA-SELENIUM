@@ -9,6 +9,8 @@
   "UserDetails": {
     "userManagementMenu" : "/html/body/div[2]/aside/section/ul/li[3]/a",
     "userDetailsMenu": "/html/body/div[2]/aside/section/ul/li[3]/ul/li[1]/a",
+    "default_password": "1234",
+    "new_password": "admin",
     "names": [
       "Alice", "Bob", "Charlie", "David", "Eve", "Frank", "Grace", "Heidi",
       "Ivan", "Jane", "Kate", "Liam", "Mia", "Noah", "Olivia", "Peter",
@@ -70,14 +72,35 @@
     "lbl_AddUserDetails_Notif_PasswordsDoNotMatch": "/html/body/div[3]/div/div[1]/h2",
     "btn_AddUserDetails_Close_Notif_PasswordsDoNotMatch": "/html/body/div[3]/div/div[3]/button[1]",
     "lbl_AddUserDetails_Notif_UserNameAlreadyExists": "/html/body/div[3]/div/div[1]/h2",
-    "btn_AssUserDetails_Close_Notif_UserNameAlreadyExists": "/html/body/div[3]/div/div[3]/button[1]"
+    "btn_AssUserDetails_Close_Notif_UserNameAlreadyExists": "/html/body/div[3]/div/div[3]/button[1]",
+    "inp_EditUserDetails_FirstName": "editFName",
+    "inp_EditUserDetails_LastName": "editLName",
+    "inp_EditUserDetails_MiddleName": "editMName",
+    "inp_EditUserDetails_ActiveCheckbox": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[5]/div",
+    "btn_EditUserDetails_ShowUpdatePasswordFields": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[6]/center/a/label",
+    "btn_AddUserDetails_ShowPassword": "passeye1",
+    "btn_AddUserDetails_ShowRetypedPassword": "passeye2",
+    "lbl_EditUserDetails_CurrentPassword_RequiredNotif": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[7]/span",
+    "lbl_EditUserDetails_NewPassword_RequiredNotif": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[8]/span",
+    "lbl_EditUserDetails_RetypePassword_RequiredNotif": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[9]/span",
+    "btn_EditUserDetails_ShowCurrentPassword": "passeye1",
+    "btn_EditUserDetails_ShowNewPassword": "passeye2",
+    "btn_EditUserDetails_ShowNewRetypedPassword": "passeye3",
+    "lbl_EditUserDetails_FirstName_RequiredNotif": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[2]/span",
+    "lbl_EditUserDetails_LastName_RequiredNotif": "/html/body/div[2]/div/div[1]/div/form/div/div[2]/div[1]/div[3]/span",
+    "btn_EditUserDetails_ConfirmSave": "/html/body/div[4]/div/div[3]/button[1]",
+    "btn_EditUserDetails_Cancel_ConfirmSave": "/html/body/div[4]/div/div[3]/button[2]",
+    "btn_EditUserDetails_UponSaving_ErrorNotification" : "/html/body/div[4]/div/div[3]/button[1]"
+
 
   },
   "SapSetup": {
 
   },
   "PathSetup": {
-
+    "btn_NavigationMenu_Configurations": "/html/body/div[2]/aside/section/ul/li[4]/a",
+    "btn_NavigationMenu_SubMenu_Setup": "/html/body/div[2]/aside/section/ul/li[4]/ul/li[1]/a",
+    "btn_Setup_PathSetupTab": "/html/body/div[2]/div[1]/section/div/div/div/ul/li[1]"
   },
   "EmailSetup": {
 

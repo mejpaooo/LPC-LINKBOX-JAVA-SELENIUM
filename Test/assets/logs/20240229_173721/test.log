@@ -1,7 +1,0 @@
-Feb 29, 2024 5:37:29 PM dev.selenium.test.Modules.Login Test_Login
-INFO: [Start] of Login Test Automation
-Feb 29, 2024 5:37:38 PM dev.selenium.test.Modules.Login Test_Login
-INFO: [End] of Login Test Automation
-Feb 29, 2024 5:37:38 PM dev.selenium.test.Main main
-INFO: One or more assertions failed: The following asserts failed:
-	Page title is not as expected. expected [Home Page111] but found [Home Page]
