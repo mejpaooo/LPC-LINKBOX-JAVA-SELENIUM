@@ -79,7 +79,7 @@ public class Main {
                 ,logger, login, savePath, softAssert);
 
 
-        driver.quit();
+//        driver.quit();
         try {
             softAssert.assertAll();
             logger.info("All assertions passed successfully.");

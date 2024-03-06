@@ -100,7 +100,29 @@
   "PathSetup": {
     "btn_NavigationMenu_Configurations": "/html/body/div[2]/aside/section/ul/li[4]/a",
     "btn_NavigationMenu_SubMenu_Setup": "/html/body/div[2]/aside/section/ul/li[4]/ul/li[1]/a",
-    "btn_Setup_PathSetupTab": "/html/body/div[2]/div[1]/section/div/div/div/ul/li[1]"
+    "btn_Setup_PathSetupTab": "/html/body/div[2]/div[1]/section/div/div/div/ul/li[1]",
+    "btn_New_PathSetup": "/html/body/div[2]/div[1]/section/div/div/div/div/div[1]/div/div[2]/div/button",
+    "inp_AddPathSetup_PathCode" : "path-code",
+    "inp_AddPathSetup_LocalPath": "path-localpath",
+    "inp_AddPathSetup_BackupPath": "path-backup",
+    "inp_AddPathSetup_ErrorPath": "path-error",
+    "inp_AddPathSetup_RemotePath": "path-remotepath",
+    "inp_AddPathSetup_RemoteServer": "path-remoteserver",
+    "inp_AddPathSetup_RemoteIPAddress": "path-remoteip",
+    "inp_AddPathSetup_RemotePort": "path-remoteport",
+    "inp_AddPathSetup_RemoteUserID": "path-remoteuser",
+    "inp_AddPathSetup_RemoteUserPassword": "path-remotepass",
+    "btn_AddPathSetup_RemoteUserPassword_ViewPassword": "passeye",
+    "btn_AddPathSetup_CloseModal": "/html/body/div[2]/div[1]/div[5]/div/form/div/div[2]/div[2]/button[1]",
+    "btn_AddPathSetup_SaveNewPathSetup": "add-path-setup",
+    "btn_AddPathSetup_Confirm_SaveNewPathSetup": "/html/body/div[4]/div/div[3]/button[1]",
+    "btn_AddPathSetup_Cancel_SaveNewPathSetup": "/html/body/div[4]/div/div[3]/button[2]",
+    "lbl_AddPathSetup_PathCode_RequiredNotif": "/html/body/div[2]/div[1]/div[5]/div/form/div/div[2]/div[1]/div[1]/span",
+    "lbl_AddPathSetup_LocalPath_RequiredNotif": "/html/body/div[2]/div[1]/div[5]/div/form/div/div[2]/div[1]/div[2]/span",
+    "btn_TablePathSetup_ViewPath_1": "/html/body/div[2]/div[1]/section/div/div/div/div/div[1]/div/div[2]/div/div/div[2]/div/table/tbody/tr/td[1]/button",
+    "btn_TablePathSetup_ViewPath_2": "/html/body/div[2]/div[1]/section/div/div/div/div/div[1]/div/div[2]/div/div/div[2]/div/table/tbody/tr[1]/td[1]/button",
+    "inp_TablePathSetup_SearchPath": "/html/body/div[2]/div[1]/section/div/div/div/div/div[1]/div/div[2]/div/div/div[1]/div[2]/div/label/input",
+    "btn_AddPathSetup_Confirm_ErrorNotification" : "/html/body/div[4]/div/div[3]/button[1]"
   },
   "EmailSetup": {
 
