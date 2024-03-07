@@ -2,12 +2,14 @@ package dev.selenium.test.Modules;
 
 import dev.selenium.test.Customizations.JsonDatasetArray;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
+import javax.annotation.concurrent.ThreadSafe;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import java.util.Random;
 import java.util.logging.Logger;
 
 import static dev.selenium.test.Customizations.screenshot.screenshot;
+
 public class PathSetup {
     public static void Test_PathSetup(WebDriver driver, WebDriverWait wait,
                                       Map<String, String> pathSetup,
@@ -70,11 +73,10 @@ public class PathSetup {
         String remoteUserPassword = "password";
         String logMessage, dupPathCode = "";
 
-
         for(int i=0; i<4; i++){
             String nameVar = namesArray.get(random.nextInt(151));
-            String pathCode = "Path_"+nameVar;
-            String localPath = "D:/"+nameVar+"/TEST";
+            String pathCode = "Path_"+nameVar+"_"+namesArray.get(random.nextInt(151));
+            String localPath = "D:"+nameVar+"TEST";
             String backupPath = "D:/"+nameVar+"/TEST/BACKUP";
             String errorPath = "D:/"+nameVar+"/TEST/ERROR";
             String remotePath = ":C/"+nameVar+"/TEST";
@@ -82,6 +84,8 @@ public class PathSetup {
             String remoteIPAddress = remoteServer;
             Integer port = random.nextInt(9000)+1111;
             String remotePort = Integer.toString(port);
+
+
 
             switch (i){
 
@@ -118,7 +122,14 @@ public class PathSetup {
 
 
                     //Inputting Path Code and Local Path
-                    driver.findElement(By.id(pathSetup.get("inp_AddPathSetup_PathCode"))).sendKeys(pathCode);
+                    driver.findElement(By.id(pathSetup.get("inp_AddPathSetup_PathCode"))).sendKeys(pathCode, Keys.TAB);
+                    Thread.sleep(1000);
+                    x = driver.findElements(By.xpath(pathSetup.get("btn_AddPathSetup_Confirm_ErrorNotification")));
+                    if (!x.isEmpty()) {
+                        i--;
+                        driver.navigate().refresh();
+                        break;
+                    }
                     driver.findElement(By.id(pathSetup.get("inp_AddPathSetup_LocalPath"))).sendKeys(localPath);
 
                     //Submitting Form
@@ -145,8 +156,11 @@ public class PathSetup {
                     logger.info("["+logMessage+"] Saved New Path Setup - Required Field Only");
 
 
-                    //Calling View User
-                    /*-----------------------     VIEW USER FUNCTION    ----------------------- */
+                    //Calling View Path
+                    //Only passing values that the path has inputted
+                    ViewPath(driver, wait, pathSetup,logger, savePath, softAssert, pathCode,
+                            localPath, "", "", "", "",
+                            "", "", "", "", "Adding with optional fields - ");
                     break;
 
 
@@ -161,15 +175,17 @@ public class PathSetup {
                     driver.findElement(By.id(pathSetup.get("inp_AddPathSetup_PathCode"))).sendKeys(dupPathCode);
 
                     //Notif is diplayed immediately upon out of focus
+                    Thread.sleep(1000);
                     driver.findElement(By.id(pathSetup.get("inp_AddPathSetup_LocalPath"))).click();
                     //Submitting Form
 //                    driver.findElement(By.id(pathSetup.get("btn_AddPathSetup_SaveNewPathSetup"))).click();
 
+                    wait.until(ExpectedConditions.elementToBeClickable(By.xpath(pathSetup.get("btn_AddPathSetup_Confirm_ErrorNotification"))));
                     x = driver.findElements(By.xpath(pathSetup.get("btn_AddPathSetup_Confirm_ErrorNotification")));
                     softAssert.assertEquals(x.size(), 1, "[MISSING] Add Path Setup - Path Code is Already Taken Error");
                     screenshot(driver, savePath, "Add Path Setup - Adding path setup with existing path code.png");
 
-                    logMessage = x.isEmpty()  ? "PASS" : "FAIL";
+                    logMessage = x.isEmpty()  ? "FAIL" : "PASS";
                     logger.info("["+logMessage+"] Add Path Setup - Unable to add with existing Path Code");
 
                     //Closing Modal
@@ -186,11 +202,13 @@ public class PathSetup {
 
 
                     //Inputting Path Code and Local Path
-                    driver.findElement(By.id(pathSetup.get("inp_AddPathSetup_PathCode"))).sendKeys(pathCode);
-                        //If Path Code Taken is taken, repetition of Case 3 will be made
+                    driver.findElement(By.id(pathSetup.get("inp_AddPathSetup_PathCode"))).sendKeys(pathCode, Keys.TAB);
+                    //If Path Code Taken is taken, repetition of Case 3 will be made
+                        Thread.sleep(1000);
                         x = driver.findElements(By.xpath(pathSetup.get("btn_AddPathSetup_Confirm_ErrorNotification")));
-                        if (x.isEmpty()) {
+                        if (!x.isEmpty()) {
                             i--;
+                            driver.navigate().refresh();
                             break;
                         }
                     driver.findElement(By.id(pathSetup.get("inp_AddPathSetup_LocalPath"))).sendKeys(localPath);
@@ -204,7 +222,24 @@ public class PathSetup {
                     driver.findElement(By.id(pathSetup.get("inp_AddPathSetup_RemoteUserPassword"))).sendKeys(remoteUserPassword);
 
 
+                    //Checking if view password button is functional
+                    for(int j=0; j<2; j++){
+                        String type1 = driver.findElement(By.id(pathSetup.get("inp_AddPathSetup_RemoteUserPassword"))).getAttribute("type");
+
+                        if(!type1.equals("password")){
+                            logger.info("[PASS] Add Path Setup - Able to DECRYPT Password");
+                            softAssert.assertNotEquals("password", type1, "[ERROR] Add Path Setup - Able to DECRYPT Password");
+
+                        }else{
+                            logger.info("[PASS] Add Path Setup - Able to ENCRYPT password");
+                            softAssert.assertEquals("password", type1, "[ERROR] Add Path Setup - Able to ENCRYPT Password");
+                        }
+                        driver.findElement(By.id(pathSetup.get("btn_AddPathSetup_RemoteUserPassword_ViewPassword"))).click();
+                    }
+
+
                     //Submitting form to save new path setup
+                    screenshot(driver, savePath, "Add Path Setup - Complete Details");
                     driver.findElement(By.id(pathSetup.get("btn_AddPathSetup_SaveNewPathSetup"))).click();
                     wait.until(ExpectedConditions.elementToBeClickable(By.xpath(pathSetup.get("btn_AddPathSetup_Confirm_SaveNewPathSetup"))));
                     driver.findElement(By.xpath(pathSetup.get("btn_AddPathSetup_Confirm_SaveNewPathSetup"))).click();
@@ -214,8 +249,10 @@ public class PathSetup {
                     logger.info("["+logMessage+"] Saved New Path Setup - Complete Fields");
 
 
-                    //Calling View User
-                    /*-----------------------     VIEW USER FUNCTION    ----------------------- */
+                    //Calling View Path
+                    ViewPath(driver, wait, pathSetup,logger, savePath, softAssert, pathCode,
+                            localPath, backupPath, errorPath, remotePath, remoteServer,
+                            remoteIPAddress, remotePort, remoteUserID, remoteUserPassword, "Adding with complete fields - ");
 
                     break;
 
@@ -226,12 +263,53 @@ public class PathSetup {
 
     }
 
-    private static void ViewPath (WebDriver driver, WebDriverWait wait,
+    private static void ViewPath(WebDriver driver, WebDriverWait wait,
                                   Map<String, String> pathSetup,
-                                  Logger logger, String savePath, SoftAssert softAssert) throws InterruptedException, FileNotFoundException {
+                                  Logger logger, String savePath, SoftAssert softAssert,
+                                  String pathCode, String localPath,
+                                  String backupPath, String errorPath,
+                                  String remotePath, String remoteServer,
+                                  String remoteIPAddress, String remotePort,
+                                  String remoteUserID, String remoteUserPassword, String TestCaseDescription) throws InterruptedException, FileNotFoundException {
 
+        logger.info("[START] Validating Path Details for "+TestCaseDescription);
         List< WebElement> x;
 
+        //Searching for Path Code in Table
+        Thread.sleep(800);
+        driver.findElement(By.xpath(pathSetup.get("inp_TablePathSetup_SearchPath"))).clear();
+        driver.findElement(By.xpath(pathSetup.get("inp_TablePathSetup_SearchPath"))).sendKeys(pathCode); //To ensure that code will search path
+
+
+        //Asserting Table Values
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(pathSetup.get("lbl_TablePathSetup_PathCode")+"[contains(text(),"+pathCode+")]")));
+        softAssert.assertEquals(driver.findElement(By.xpath(pathSetup.get("lbl_TablePathSetup_PathCode"))).getText(), pathCode, "[ERROR] Path Setup Table - Different Path Code Value - Test Case: "+TestCaseDescription);
+        softAssert.assertEquals(driver.findElement(By.xpath(pathSetup.get("lbl_TablePathSetup_LocalPath"))).getText(), localPath, "[ERROR] Path Setup Table - Different Local Path Value - Test Case: "+TestCaseDescription);
+        softAssert.assertEquals(driver.findElement(By.xpath(pathSetup.get("lbl_TablePathSetup_BackupPath"))).getText(), backupPath, "[ERROR] Path Setup Table - Different Back up Path Value - Test Case: "+TestCaseDescription);
+        softAssert.assertEquals(driver.findElement(By.xpath(pathSetup.get("lbl_TablePathSetup_ErrorPath"))).getText(), errorPath, "[ERROR] Path Setup Table - Different Error Path Value - Test Case: "+TestCaseDescription);
+        softAssert.assertEquals(driver.findElement(By.xpath(pathSetup.get("lbl_TablePathSetup_ActiveStatus"))).getText(), "Active", "[ERROR] Path Setup Table - Different Error Path Value - Test Case: "+TestCaseDescription);
+
+
+        //Opening Path Code
+        driver.findElement(By.xpath(pathSetup.get("btn_TablePathSetup_ViewPath_1"))).click();
+
+        //Asserting Complete Path Setup Details
+        wait.until(ExpectedConditions.elementToBeClickable(By.id(pathSetup.get("lbl_EditPathSetup_PathCode"))));
+
+        Thread.sleep(800);
+        softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_PathCode"))).getAttribute("value"), pathCode, "[ERROR] View Path Setup - Path Code Values Do Not Match - Test Case: "+TestCaseDescription);
+        softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_LocalPath"))).getAttribute("value"), localPath, "[ERROR] View Path Setup - Local Path Values Do Not Match - Test Case: "+TestCaseDescription);
+        softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_BackupPath"))).getAttribute("value"), backupPath, "[ERROR] View Path Setup - Backup Path Values Do Not Match - Test Case: "+TestCaseDescription);
+        softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_ErrorPath"))).getAttribute("value"), errorPath, "[ERROR] View Path Setup - Error Path Values Do Not Match - Test Case: "+TestCaseDescription);
+        softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_RemotePath"))).getAttribute("value"), remotePath, "[ERROR] View Path Setup - Remote Path Values Do Not Match - Test Case: "+TestCaseDescription);
+        softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_RemoteServer"))).getAttribute("value"), remoteServer, "[ERROR] View Path Setup - Remote Server Values Do Not Match - Test Case: "+TestCaseDescription);
+        softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_RemoteIPAddress"))).getAttribute("value"), remoteIPAddress, "[ERROR] View Path Setup - Remote IP Address Values Do Not Match - Test Case: "+TestCaseDescription);
+        softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_RemotePort"))).getAttribute("value"), remotePort, "[ERROR] View Path Setup - Remote Port Values Do Not Match - Test Case: "+TestCaseDescription);
+        softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_RemoteUserID"))).getAttribute("value"), remoteUserID, "[ERROR] View Path Setup - Remote User ID Values Do Not Match - Test Case: "+TestCaseDescription);
+        softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_RemotePassword"))).getAttribute("value"), remoteUserPassword, "[ERROR] View Path Setup - Remote User Password Values Do Not Match - Test Case: "+TestCaseDescription);
+        softAssert.assertEquals(driver.findElement(By.xpath(pathSetup.get("btn_EditPathSetup_ActiveStatus"))).getAttribute("aria-checked"), "true", "[ERROR] View Path Setup - Active Status Not Checked - Test Case: "+TestCaseDescription);
+
+        logger.info("[END] Validating Path Details for"+TestCaseDescription);
     }
 
 

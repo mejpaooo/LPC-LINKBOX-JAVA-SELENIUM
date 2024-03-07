@@ -353,7 +353,6 @@ public class UserDetails {
                     ViewUser(driver, wait, userDetails, login, logger, savePath, softAssert, userName, firstName, middleName, lastName, password);    //Adding New User
                     break;
 
-
             }
 
         }
@@ -434,7 +433,7 @@ public class UserDetails {
         y = driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_UserName"))).getAttribute("disabled");
         softAssert.assertEquals(y,"true", "Error: Edit User Details | User Name is Editable");
 
-        for(int i=0; i<4; i++){
+        for(int i=0; i<5; i++){
             switch (i){
 
                 //Editing User by deleting first name and last name
@@ -639,6 +638,7 @@ public class UserDetails {
                     driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_MiddleName"))).clear();
                     driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_LastName"))).clear();
 
+                    //Inputting Updated Names
                     driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_FirstName"))).sendKeys(NewfirstName);
                     driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_MiddleName"))).sendKeys(NewmiddleName);
                     driver.findElement(By.xpath(userDetails.get("lbl_ViewedUser_LastName"))).sendKeys(NewlastName);
@@ -686,6 +686,86 @@ public class UserDetails {
                     NewDriver.quit();
 
                     break;
+
+
+                //Logging in with "Inactive" User Status
+                case (4):
+                    //Opening existing user
+                    driver.findElement(By.xpath(userDetails.get("inp_SearchUser_Search"))).clear();
+                    driver.findElement(By.xpath(userDetails.get("inp_SearchUser_Search"))).sendKeys(userName);
+                    driver.findElement(By.xpath(userDetails.get("btn_SearchUser_UsersTable_EditUser"))).click();
+
+                    //Unchecking Active Status
+                    driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_ActiveStatus"))).click();
+
+                    //Submitting Changes, to check if error notification is displayed
+                    driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_SaveChanges"))).click();
+                    Thread.sleep(2000);
+                    driver.findElement(By.xpath(userDetails.get("btn_EditUserDetails_ConfirmSave"))).click(); // Confirming Save
+
+                    //Asserting that user status on table is now "Inactive"
+                    Thread.sleep(3000);
+                    softAssert.assertEquals(driver.findElement(By.xpath(userDetails.get("lbl_SearchUser_UsersTable_ActiveStatus"))).getText(), "Inactive");
+
+                    NewDriver = new EdgeDriver();
+                    NewDriver.get("http://192.168.2.32:8069");
+
+                    //Waiting for login page to load
+                    presenceOfLogInButton = NewDriver.findElement(By.id(login.get("btn_signIn")));
+                    wait.until(ExpectedConditions.elementToBeClickable(presenceOfLogInButton));
+                    NewDriver.findElement(By.id(login.get("username"))).sendKeys(userName);
+                    NewDriver.findElement(By.id(login.get("password"))).sendKeys(Newpassword);
+                    NewDriver.findElement(By.id(login.get("btn_signIn"))).click();
+                    Thread.sleep(1000);
+
+                    if(NewDriver.getTitle().equals("Home Page")){
+                        logger.info("[FAIL] Able to Login user with inactive user status");
+                    } else{
+                        logger.info("[PASS] Able to Login user with inactive user status");
+                    }
+
+                    screenshot(NewDriver, savePath, "Edit User Details - Logging in with Updated Inactive Status");
+                    softAssert.assertNotEquals(NewDriver.getTitle(), "Home Page", "Able to login with Inactive Status");
+
+
+                    //Updating user back to Active and relogging in
+                    driver.findElement(By.xpath(userDetails.get("btn_SearchUser_UsersTable_EditUser"))).click();
+
+                    //Unchecking Active Status
+                    driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_ActiveStatus"))).click();
+
+                    //Submitting Changes, to check if error notification is displayed
+                    driver.findElement(By.xpath(userDetails.get("btn_ViewedUser_SaveChanges"))).click();
+                    Thread.sleep(2000);
+                    driver.findElement(By.xpath(userDetails.get("btn_EditUserDetails_ConfirmSave"))).click(); // Confirming Save
+
+
+                    /*
+                        Changing user back to "Active" Status then relogging in
+                    */
+
+                    //Asserting that user status on table is now "Inactive"
+                    Thread.sleep(3000);
+                    softAssert.assertEquals(driver.findElement(By.xpath(userDetails.get("lbl_SearchUser_UsersTable_ActiveStatus"))).getText(), "Active");
+
+                    presenceOfLogInButton = NewDriver.findElement(By.id(login.get("btn_signIn")));
+                    wait.until(ExpectedConditions.elementToBeClickable(presenceOfLogInButton));
+                    NewDriver.findElement(By.id(login.get("username"))).sendKeys(userName);
+                    NewDriver.findElement(By.id(login.get("password"))).sendKeys(Newpassword);
+                    NewDriver.findElement(By.id(login.get("btn_signIn"))).click();
+                    Thread.sleep(1000);
+
+                    if(NewDriver.getTitle().equals("Home Page")){
+                        logger.info("[FAIL] Able to Login user with inactive user status");
+                    } else{
+                        logger.info("[PASS] Able to Login user with inactive user status");
+                    }
+
+                    screenshot(NewDriver, savePath, "Edit User Details - Logging in with Updated Active Status");
+                    softAssert.assertEquals(NewDriver.getTitle(), "Home Page", "Able to login upon updating user with Inactive Status back to Active Status");
+
+                    break;
+
             }
         }
 
