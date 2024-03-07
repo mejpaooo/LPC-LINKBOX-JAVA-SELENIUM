@@ -30,9 +30,6 @@ public class Sprint1 {
 //        UserDetails.Test_UserDetails(driver, wait, userDetails, login, logger, savePath, softAssert);
         PathSetup.Test_PathSetup(driver, wait, pathSetup, userDetails, logger, savePath, softAssert);
 
-        //Eyyyooooo
-
-
     }
 
 

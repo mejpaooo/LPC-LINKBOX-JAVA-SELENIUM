@@ -330,13 +330,6 @@ public class PathSetup {
             driver.findElement(By.xpath(pathSetup.get("btn_TablePathSetup_ViewPath_2"))).click(); //if there are multiple path setup displayed on table
         }
     }
-
-
-    private  static void TestFunc(){
-        System.out.println("Yes");
-    }
-
-
-
+    
 
 } // End of Main Class
