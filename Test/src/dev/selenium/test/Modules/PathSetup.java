@@ -79,7 +79,7 @@ public class PathSetup {
             String localPath = "D:"+nameVar+"TEST";
             String backupPath = "D:/"+nameVar+"/TEST/BACKUP";
             String errorPath = "D:/"+nameVar+"/TEST/ERROR";
-            String remotePath = ":C/"+nameVar+"/TEST";
+            String remotePath = "C:/"+nameVar+"/TEST";
             String remoteServer = "192.168."+random.nextInt(200)+"."+random.nextInt(200);
             String remoteIPAddress = remoteServer;
             Integer port = random.nextInt(9000)+1111;
