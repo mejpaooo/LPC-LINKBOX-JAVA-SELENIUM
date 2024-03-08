@@ -1,0 +1,91 @@
+Mar 08, 2024 11:30:28 AM dev.selenium.test.Modules.Login Test_Login
+INFO: [Start] of Login Test Automation
+Mar 08, 2024 11:30:38 AM dev.selenium.test.Modules.Login Test_Login
+INFO: [End] of Login Test Automation
+Mar 08, 2024 11:30:38 AM dev.selenium.test.Modules.UserDetails Test_UserDetails
+INFO: [START] of User Details
+Mar 08, 2024 11:30:38 AM dev.selenium.test.Modules.UserDetails OpenModule
+INFO: Opening User Details Module
+Mar 08, 2024 11:30:40 AM dev.selenium.test.Modules.UserDetails OpenModule
+INFO: [PASS] Openend User Details Module
+Mar 08, 2024 11:30:40 AM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [START] Adding New User
+Mar 08, 2024 11:30:43 AM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Unable to Add user with incomplete required fields_No input
+Mar 08, 2024 11:31:21 AM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Able to Add user with incomplete optional fields
+Mar 08, 2024 11:31:22 AM dev.selenium.test.Modules.UserDetails ViewUser
+INFO: [START] Checking if new added user is present on 'Users List'
+Mar 08, 2024 11:31:24 AM dev.selenium.test.Modules.UserDetails ViewUser
+INFO: [END] Checking if new added user is present on 'Users List'
+Mar 08, 2024 11:31:30 AM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Unable to Add user with mismatched passwords
+Mar 08, 2024 11:31:35 AM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Unable to Add user with mismatched passwords
+Mar 08, 2024 11:31:40 AM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Add User Details_Able to ENCRYPT password
+Mar 08, 2024 11:31:41 AM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Add User Details_Able to ENCRYPT password
+Mar 08, 2024 11:32:01 AM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [PASS] Able to Add user with complete fields
+Mar 08, 2024 11:32:14 AM dev.selenium.test.Modules.UserDetails ViewUser
+INFO: [START] Checking if new added user is present on 'Users List'
+Mar 08, 2024 11:32:16 AM dev.selenium.test.Modules.UserDetails ViewUser
+INFO: [END] Checking if new added user is present on 'Users List'
+Mar 08, 2024 11:32:16 AM dev.selenium.test.Modules.UserDetails AddNewUser
+INFO: [END] Adding New User
+Mar 08, 2024 11:32:16 AM dev.selenium.test.Modules.UserDetails EditUser
+INFO: [START] Editing User
+Mar 08, 2024 11:32:19 AM dev.selenium.test.Modules.UserDetails EditUser
+INFO: [PASS] Unable to update user without Required Fields
+Mar 08, 2024 11:32:20 AM dev.selenium.test.Modules.UserDetails EditUser
+INFO: Add User Details_Able to ENCRYPT password
+Mar 08, 2024 11:32:21 AM dev.selenium.test.Modules.UserDetails EditUser
+INFO: Add User Details_Able to ENCRYPT password
+Mar 08, 2024 11:32:23 AM dev.selenium.test.Modules.UserDetails EditUser
+INFO: [PASS] Unable to add new user with Mismatched 'New' and 'Retype' Password
+Mar 08, 2024 11:32:29 AM dev.selenium.test.Modules.UserDetails EditUser
+INFO: [PASS] Unable to update user with incorrect 'Current' Password
+Mar 08, 2024 11:32:37 AM dev.selenium.test.Modules.UserDetails ViewUser
+INFO: [START] Checking if new added user is present on 'Users List'
+Mar 08, 2024 11:32:39 AM dev.selenium.test.Modules.UserDetails ViewUser
+INFO: [END] Checking if new added user is present on 'Users List'
+Mar 08, 2024 11:32:59 AM dev.selenium.test.Modules.UserDetails EditUser
+INFO: [PASS] Able to update user details and still able to login
+Mar 08, 2024 11:33:22 AM dev.selenium.test.Modules.UserDetails EditUser
+INFO: [PASS] Able to Login user with inactive user status
+Mar 08, 2024 11:33:38 AM dev.selenium.test.Modules.UserDetails EditUser
+INFO: [PASS] Able to Login user with updated status from inactive to active -
+Mar 08, 2024 11:33:38 AM dev.selenium.test.Modules.UserDetails EditUser
+INFO: [END] Editing User
+Mar 08, 2024 11:33:38 AM dev.selenium.test.Modules.UserDetails Test_UserDetails
+INFO: [END] of User Details
+Mar 08, 2024 11:33:38 AM dev.selenium.test.Modules.PathSetup OpenModule
+INFO: Opening User Details Module
+Mar 08, 2024 11:33:43 AM dev.selenium.test.Modules.PathSetup OpenModule
+INFO: [PASS] Opened Path Setup Module
+Mar 08, 2024 11:33:44 AM dev.selenium.test.Modules.PathSetup AddPath
+INFO: [PASS] Unable to add path setup without required fields
+Mar 08, 2024 11:33:48 AM dev.selenium.test.Modules.PathSetup AddPath
+INFO: [PASS] Cancel Button on Confirming Saving of New Path Setup
+Mar 08, 2024 11:33:50 AM dev.selenium.test.Modules.PathSetup AddPath
+INFO: [PASS] Saved New Path Setup - Required Field Only
+Mar 08, 2024 11:33:50 AM dev.selenium.test.Modules.PathSetup ViewPath
+INFO: [START] Validating Path Details for Adding with optional fields - 
+Mar 08, 2024 11:33:53 AM dev.selenium.test.Modules.PathSetup ViewPath
+INFO: [END] Validating Path Details forAdding with optional fields - 
+Mar 08, 2024 11:33:57 AM dev.selenium.test.Modules.PathSetup AddPath
+INFO: [PASS] Add Path Setup - Unable to add with existing Path Code
+Mar 08, 2024 11:34:01 AM dev.selenium.test.Modules.PathSetup AddPath
+INFO: [PASS] Add Path Setup - Able to ENCRYPT password
+Mar 08, 2024 11:34:01 AM dev.selenium.test.Modules.PathSetup AddPath
+INFO: [PASS] Add Path Setup - Able to DECRYPT Password
+Mar 08, 2024 11:34:02 AM dev.selenium.test.Modules.PathSetup AddPath
+INFO: [FAIL] Saved New Path Setup - Complete Fields
+Mar 08, 2024 11:34:02 AM dev.selenium.test.Modules.PathSetup ViewPath
+INFO: [START] Validating Path Details for Adding with complete fields - 
+Mar 08, 2024 11:34:06 AM dev.selenium.test.Modules.PathSetup ViewPath
+INFO: [END] Validating Path Details forAdding with complete fields - 
+Mar 08, 2024 11:34:06 AM dev.selenium.test.Main main
+INFO: All assertions passed successfully.
+

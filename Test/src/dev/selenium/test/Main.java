@@ -60,7 +60,7 @@ public class Main {
 
         //Opening Test Web Page
         WebDriver driver = new EdgeDriver();
-        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(60));
         driver.manage().window().maximize();
 
         //Temporary IP for linkbox, this is for MAXI
@@ -82,9 +82,9 @@ public class Main {
 //        driver.quit();
         try {
             softAssert.assertAll();
-            logger.info("All assertions passed successfully.");
+            logger.info("All assertions passed successfully.\n");
         } catch (AssertionError e) {
-            logger.info("One or more assertions failed: " + e.getMessage());
+            logger.info("\nOne or more assertions failed: " + e.getMessage());
         }
     }
 

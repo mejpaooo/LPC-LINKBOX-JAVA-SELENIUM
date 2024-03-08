@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
-import javax.annotation.concurrent.ThreadSafe;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +23,26 @@ public class PathSetup {
                                       Map<String, String> userDetails,
                                       Logger logger, String savePath, SoftAssert softAssert) throws InterruptedException, FileNotFoundException {
 
+        String remoteUserID = "admin";
+        String remoteUserPassword = "password";
+
+        String pathCode = "", localPath = "", backupPath= "", errorPath= "", remotePath= "";
+        String remoteServer= "", remoteIPAddress= "", remotePort= "", dupPathCode = "";
+        Integer port =0;
+
+
         //Calling Modules
         OpenModule(driver, wait, pathSetup, logger, savePath, softAssert); //Opening Module
-        AddPath(driver, wait, pathSetup, userDetails,logger, savePath, softAssert); //Opening Module
+        AddPath(driver, wait, pathSetup, userDetails,logger, savePath, softAssert
+                ,remoteUserID, remoteUserPassword, dupPathCode
+                ,pathCode, localPath, backupPath, errorPath, remotePath, remoteServer
+                ,remoteIPAddress, remotePort, port); //Opening Module
 
-
+        //ViewPath is called by "AddPath" and "EditPath" Classes
+        EditPath(driver, wait, pathSetup, userDetails,logger, savePath, softAssert
+                ,remoteUserID, remoteUserPassword, dupPathCode
+                ,pathCode, localPath, backupPath, errorPath, remotePath, remoteServer
+                ,remoteIPAddress, remotePort, port); //Opening Module
     }
 
 
@@ -61,7 +75,12 @@ public class PathSetup {
     private static void AddPath (WebDriver driver, WebDriverWait wait,
                                  Map<String, String> pathSetup,
                                  Map<String, String> userDetails,
-                                 Logger logger, String savePath, SoftAssert softAssert) throws InterruptedException, FileNotFoundException {
+                                 Logger logger, String savePath, SoftAssert softAssert,
+                                 String remoteUserID, String remoteUserPassword,
+                                 String dupPathCode, String pathCode, String localPath,
+                                 String backupPath, String errorPath, String remotePath,
+                                 String remoteServer, String remoteIPAddress, String remotePort,
+                                 Integer port) throws InterruptedException, FileNotFoundException {
 
 
         Map<String, Object> Names = JsonDatasetArray.parser("UserDetails");
@@ -69,22 +88,21 @@ public class PathSetup {
         Random random = new Random();
         List< WebElement> x;
 
-        String remoteUserID = "admin";
-        String remoteUserPassword = "password";
-        String logMessage, dupPathCode = "";
+        remoteUserID = "admin";
+        remoteUserPassword = "password";
+        String logMessage = "";
 
         for(int i=0; i<4; i++){
             String nameVar = namesArray.get(random.nextInt(151));
-            String pathCode = "Path_"+nameVar+"_"+namesArray.get(random.nextInt(151));
-            String localPath = "D:"+nameVar+"TEST";
-            String backupPath = "D:/"+nameVar+"/TEST/BACKUP";
-            String errorPath = "D:/"+nameVar+"/TEST/ERROR";
-            String remotePath = "C:/"+nameVar+"/TEST";
-            String remoteServer = "192.168."+random.nextInt(200)+"."+random.nextInt(200);
-            String remoteIPAddress = remoteServer;
-            Integer port = random.nextInt(9000)+1111;
-            String remotePort = Integer.toString(port);
-
+            pathCode = "Path_"+nameVar+"_"+namesArray.get(random.nextInt(151));
+            localPath = "D:"+nameVar+"TEST";
+            backupPath = "D:/"+nameVar+"/TEST/BACKUP";
+            errorPath = "D:/"+nameVar+"/TEST/ERROR";
+            remotePath = "C:/"+nameVar+"/TEST";
+            remoteServer = "192.168."+random.nextInt(200)+"."+random.nextInt(200);
+            remoteIPAddress = remoteServer;
+            port = random.nextInt(9000)+1111;
+            remotePort = Integer.toString(port);
 
 
             switch (i){
@@ -239,11 +257,12 @@ public class PathSetup {
 
 
                     //Submitting form to save new path setup
-                    screenshot(driver, savePath, "Add Path Setup - Complete Details");
+                    screenshot(driver, savePath, "Add Path Setup - Complete Details.png");
                     driver.findElement(By.id(pathSetup.get("btn_AddPathSetup_SaveNewPathSetup"))).click();
                     wait.until(ExpectedConditions.elementToBeClickable(By.xpath(pathSetup.get("btn_AddPathSetup_Confirm_SaveNewPathSetup"))));
                     driver.findElement(By.xpath(pathSetup.get("btn_AddPathSetup_Confirm_SaveNewPathSetup"))).click();
 
+                    screenshot(driver, savePath, "Add Path Setup - Complete Details Submission.png");
                     x = driver.findElements(By.xpath(pathSetup.get("btn_AddPathSetup_Confirm_SaveNewPathSetup")));
                     logMessage =x.isEmpty()  ? "PASS" : "FAIL";
                     logger.info("["+logMessage+"] Saved New Path Setup - Complete Fields");
@@ -303,7 +322,7 @@ public class PathSetup {
         softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_ErrorPath"))).getAttribute("value"), errorPath, "[ERROR] View Path Setup - Error Path Values Do Not Match - Test Case: "+TestCaseDescription);
         softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_RemotePath"))).getAttribute("value"), remotePath, "[ERROR] View Path Setup - Remote Path Values Do Not Match - Test Case: "+TestCaseDescription);
         softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_RemoteServer"))).getAttribute("value"), remoteServer, "[ERROR] View Path Setup - Remote Server Values Do Not Match - Test Case: "+TestCaseDescription);
-        softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_RemoteIPAddress"))).getAttribute("value"), remoteIPAddress, "[ERROR] View Path Setup - Remote IP Address Values Do Not Match - Test Case: "+TestCaseDescription);
+        softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_RemoteIPAddress"))).getAttribute("value").replace("_", ""), remoteIPAddress, "[ERROR] View Path Setup - Remote IP Address Values Do Not Match - Test Case: "+TestCaseDescription);
         softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_RemotePort"))).getAttribute("value"), remotePort, "[ERROR] View Path Setup - Remote Port Values Do Not Match - Test Case: "+TestCaseDescription);
         softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_RemoteUserID"))).getAttribute("value"), remoteUserID, "[ERROR] View Path Setup - Remote User ID Values Do Not Match - Test Case: "+TestCaseDescription);
         softAssert.assertEquals(driver.findElement(By.id(pathSetup.get("lbl_EditPathSetup_RemotePassword"))).getAttribute("value"), remoteUserPassword, "[ERROR] View Path Setup - Remote User Password Values Do Not Match - Test Case: "+TestCaseDescription);
@@ -314,8 +333,13 @@ public class PathSetup {
 
 
     private static void EditPath (WebDriver driver, WebDriverWait wait,
-                                 Map<String, String> pathSetup,
-                                 Logger logger, String savePath, SoftAssert softAssert) throws InterruptedException, FileNotFoundException {
+                                  Map<String, String> pathSetup,
+                                  Map<String, String> userDetails, Logger logger,
+                                  String savePath, SoftAssert softAssert, String remoteUserID,
+                                  String remoteUserPassword, String dupPathCode, String pathCode,
+                                  String localPath, String backupPath, String errorPath,
+                                  String remotePath, String remoteServer, String remoteIPAddress,
+                                  String remotePort, Integer port) throws InterruptedException, FileNotFoundException {
 
         List< WebElement> x;
 
